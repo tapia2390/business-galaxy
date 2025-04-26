@@ -19,7 +19,11 @@ export default function TaskItem({ task, onComplete, onDelete }: Props) {
       </View>
       <View style={styles.actions}>
         <TouchableOpacity onPress={() => onComplete(task.id)}>
-          <Text style={{ color: Colors.success }}>✓</Text>
+         
+          <Text style={{ color: Colors.success }}>
+    {task.isDone ? '❌' : '✓'}
+  </Text>
+
         </TouchableOpacity>
         <TouchableOpacity onPress={() => onDelete(task.id)} style={{ marginLeft: 16 }}>
           <Text style={{ color: Colors.danger }}>🗑️</Text>

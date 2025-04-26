@@ -26,12 +26,12 @@ export function useTasks() {
   };
 
   const completeTask = async (id: number) => {
-    const task = tasks.find(t => t.id === id);
-    if (task) {
-      const updatedTask = await updateTask(id, { ...task, isDone: !task.isDone });
+  const task = tasks.find(t => t.id === id);
+  if (task) {
+    const updatedTask = await updateTask(id, { ...task, isDone: !task.isDone });
     setTasks(prev => prev.map(t => (t.id === id ? updatedTask : t)));
-    }
-  };
+  }
+};
 
   const removeTask = async (id: number) => {
     await deleteTask(id);
