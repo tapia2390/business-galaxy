@@ -30,7 +30,7 @@ public class TaskService {
         return repository.findById(id)
                 .map(existing -> {
                     existing.setTitle(newTask.getTitle());
-                    existing.setDone(newTask.getDone());
+                    existing.setIsDone(newTask.getIsDone());
                     return repository.save(existing);
                 })
                 .orElse(null);
@@ -47,7 +47,7 @@ public class TaskService {
         if (optionalTask.isEmpty()) return null;
 
         Task task = optionalTask.get();
-        task.setDone(!task.getDone());
+        task.setIsDone(!task.getIsDone());
         return repository.save(task);
     }
 }
