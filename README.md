@@ -19,7 +19,8 @@
 
 show app fron without  bd
 
-![image](https://github.com/user-attachments/assets/c17db2d1-af0a-4851-8772-8187b174acd8)
+![image](https://github.com/user-attachments/assets/537f7f57-94f4-4cff-889d-9b97634eec47)
+
 
 
 show app front with bd
