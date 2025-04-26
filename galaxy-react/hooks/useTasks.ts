@@ -29,7 +29,7 @@ export function useTasks() {
     const task = tasks.find(t => t.id === id);
     if (task) {
       const updatedTask = await updateTask(id, { ...task, isDone: !task.isDone });
-      setTasks(prev => prev.map(t => (t.id === id ? updatedTask : t)));
+    setTasks(prev => prev.map(t => (t.id === id ? updatedTask : t)));
     }
   };
 
