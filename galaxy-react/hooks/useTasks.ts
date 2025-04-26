@@ -38,9 +38,14 @@ export function useTasks() {
     setTasks(prev => prev.filter(t => t.id !== id));
   };
 
+  const updateTaskTitleAndDescription = async (id: number, updatedFields: Partial<Task>) => {
+  const updatedTask = await updateTask(id, updatedFields);
+  setTasks(prev => prev.map(t => (t.id === id ? updatedTask : t)));
+};
+
   useEffect(() => {
     loadTasks();
   }, []);
 
-  return { tasks, loading, error, createTask, completeTask, removeTask };
+  return { tasks, loading, error, createTask, completeTask, removeTask,updateTask: updateTaskTitleAndDescription  };
 }

@@ -1,20 +1,35 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
-import { Colors } from '../constants/Colors';
+import React, { useState, useEffect } from "react";
+import { View, TextInput, Button, Text, StyleSheet } from "react-native";
+import { Colors } from "../constants/Colors";
+import { Task } from "../types/task";
 
 interface Props {
-  onAdd: (title: string, description: string) => void;
+  task?: Task; // Optional task prop for editing
+  onSave: (title: string, description: string, taskId?: number) => void; // Handle both create and update
 }
 
-export default function TaskForm({ onAdd }: Props) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+export default function TaskForm({ task, onSave }: Props) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  // Pre-fill form fields if task is provided (for editing)
+  useEffect(() => {
+    if (task) {
+      setTitle(task.title);
+      setDescription(task.description);
+    }
+  }, [task]);
 
   const handleSubmit = () => {
-    if (title.trim() === '') return;
-    onAdd(title, description);
-    setTitle('');
-    setDescription('');
+    if (title.trim() === "" || description.trim() === "") {
+      setError("Both title and description are required.");
+      return;
+    }
+    setError(null);
+    onSave(title, description, task?.id); // Pass task id for update, undefined for new task
+    setTitle("");
+    setDescription("");
   };
 
   return (
@@ -31,7 +46,13 @@ export default function TaskForm({ onAdd }: Props) {
         onChangeText={setDescription}
         style={styles.input}
       />
-      <Button title="Agregar" onPress={handleSubmit} color={Colors.primary} />
+      {error && <Text style={styles.errorText}>{error}</Text>}
+      <Button
+        title={task ? "Actualizar" : "Agregar"} // Change button text based on editing or creating
+        onPress={handleSubmit}
+        color={Colors.primary}
+        disabled={title.trim() === "" || description.trim() === ""}
+      />
     </View>
   );
 }
@@ -41,11 +62,16 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 12,
     borderRadius: 8,
     marginBottom: 8,
     borderWidth: 1,
     borderColor: Colors.primary,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 14,
+    marginBottom: 8,
   },
 });

@@ -1,12 +1,43 @@
-import React from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
-import { useTasks } from '../../hooks/useTasks';
-import TaskItem from '../../components/TaskItem';
-import TaskForm from '../../components/TaskForm';
-import { Colors } from '../../constants/Colors';
+import React, { useState } from "react";
+import {
+  View,
+  FlatList,
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+} from "react-native";
+import { useTasks } from "../../hooks/useTasks";
+import TaskItem from "../../components/TaskItem";
+import TaskForm from "../../components/TaskForm";
+import { Colors } from "../../constants/Colors";
+import { Task } from "../../types/task";
 
 export default function HomeScreen() {
-  const { tasks, loading, error, createTask, completeTask, removeTask } = useTasks();
+  const {
+    tasks,
+    loading,
+    error,
+    createTask,
+    completeTask,
+    removeTask,
+    updateTask,
+  } = useTasks();
+  const [editingTask, setEditingTask] = useState<Task | null>(null); // State for editing task
+
+  const handleSaveTask = (
+    title: string,
+    description: string,
+    taskId?: number
+  ) => {
+    if (taskId) {
+      // Update existing task
+      updateTask(taskId, { title, description });
+    } else {
+      // Create new task
+      createTask({ title, description, isDone: false });
+    }
+    setEditingTask(null); // Reset editing task after save
+  };
 
   if (loading) return <ActivityIndicator size="large" color={Colors.primary} />;
 
@@ -14,16 +45,20 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <TaskForm 
-        onAdd={(title, description) => 
-          createTask({ title, description, isDone: false }) 
-        } 
+      <TaskForm
+        task={editingTask} // Pass the task to be edited
+        onSave={handleSaveTask}
       />
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <TaskItem task={item} onComplete={completeTask} onDelete={removeTask} />
+          <TaskItem
+            task={item}
+            onComplete={completeTask}
+            onDelete={removeTask}
+            onEdit={() => setEditingTask(item)} // Set task to be edited
+          />
         )}
       />
     </View>
