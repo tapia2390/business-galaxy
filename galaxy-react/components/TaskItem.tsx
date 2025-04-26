@@ -18,10 +18,11 @@ export default function TaskItem({
 }: Props) {
   return (
     <View style={styles.item}>
-      <View>
+      <View style={styles.textContainer}>
         <Text style={[styles.title, task.isDone && styles.completed]}>
           {task.title}
         </Text>
+        <Text style={styles.description}>{task.description}</Text>
       </View>
 
       <View style={styles.actions}>
