@@ -1,4 +1,4 @@
-// components/TaskItem.tsx
+
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Task } from '../types/task';
@@ -15,7 +15,7 @@ export default function TaskItem({ task, onComplete, onDelete }: Props) {
     <View style={styles.item}>
       <View>
         <Text style={[styles.title, task.isDone && styles.completed]}>{task.title}</Text>
-        <Text style={styles.description}>{task.description}</Text>
+        
       </View>
       <View style={styles.actions}>
         <TouchableOpacity onPress={() => onComplete(task.id)}>
@@ -47,10 +47,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
     color: Colors.success,
   },
-  description: {
-    fontSize: 12,
-    color: Colors.text,
-  },
+  
   actions: {
     flexDirection: 'row',
     alignItems: 'center',

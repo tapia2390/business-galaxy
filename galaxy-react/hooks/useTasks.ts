@@ -20,6 +20,7 @@ export function useTasks() {
   };
 
   const createTask = async (task: Omit<Task, 'id'>) => {
+    console.log('new task create:', task); 
     const newTask = await addTask(task);
     setTasks(prev => [...prev, newTask]);
   };

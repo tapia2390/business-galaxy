@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Task } from '../types/task';
 
-// Cambia según tu IP o usa 10.0.2.2 en Android emulator
-//http://localhost:8080/tasks
+
+
 const API_URL = 'http://localhost:8080/tasks';
 
 export const getTasks = async () => {
@@ -10,8 +10,11 @@ export const getTasks = async () => {
   return response.data;
 };
 
+
+
 export const addTask = async (task: Omit<Task, 'id'>) => {
   const response = await axios.post<Task>(API_URL, task);
+  console.log('Respuesta del servidor al agregar tarea:', response.data);
   return response.data;
 };
 
@@ -23,3 +26,4 @@ export const updateTask = async (id: number, task: Task) => {
 export const deleteTask = async (id: number) => {
   await axios.delete(`${API_URL}/${id}`);
 };
+

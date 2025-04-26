@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Switch, Text } from 'react-native';
 import { Colors } from '../constants/Colors';
 
 interface Props {
-  onAdd: (title: string, description: string) => void;
+  onAdd: (title: string, isDone: boolean) => void;
 }
 
 export default function TaskForm({ onAdd }: Props) {
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [isDone, setIsDone] = useState(false); // Estado para el switch
 
   const handleSubmit = () => {
     if (title.trim()) {
-      onAdd(title, description);
+      console.log('Tarea:', title);
+      console.log('¿Está completada?', isDone);
+      onAdd(title, isDone); 
       setTitle('');
-      setDescription('');
+      setIsDone(false);
     }
   };
 
@@ -26,12 +28,17 @@ export default function TaskForm({ onAdd }: Props) {
         value={title}
         onChangeText={setTitle}
       />
-      <TextInput
-        placeholder="Descripción"
-        style={styles.input}
-        value={description}
-        onChangeText={setDescription}
-      />
+
+      <View style={styles.switchContainer}>
+        <Text style={styles.switchLabel}>¿Completada?</Text>
+        <Switch
+          value={isDone} 
+          onValueChange={setIsDone} 
+          thumbColor={isDone ? Colors.primary : '#ccc'}
+          trackColor={{ true: Colors.primary, false: '#ccc' }}
+        />
+      </View>
+
       <Button title="Agregar tarea" onPress={handleSubmit} color={Colors.primary} />
     </View>
   );
@@ -46,5 +53,15 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 8,
     borderRadius: 8,
+  },
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+    justifyContent: 'space-between',
+  },
+  switchLabel: {
+    fontSize: 16,
+    color: Colors.text,
   },
 });

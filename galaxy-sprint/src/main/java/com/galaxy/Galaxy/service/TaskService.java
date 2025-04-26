@@ -43,7 +43,7 @@ public class TaskService {
         if (optionalTask.isEmpty()) return null;
 
         Task task = optionalTask.get();
-        task.setDone(!task.isDone());
+        task.setDone(!task.getDone());
         return repository.save(task);
     }
 }

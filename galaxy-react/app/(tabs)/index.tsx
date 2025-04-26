@@ -14,7 +14,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <TaskForm onAdd={(title, description) => createTask({ title, description, isDone: false })} />
+      <TaskForm onAdd={(title, isDone) => createTask({ title, isDone })} />
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id.toString()}
