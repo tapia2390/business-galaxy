@@ -1,5 +1,6 @@
 package com.galaxy.Galaxy.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +11,8 @@ public class Task {
     private Long id;
 
     private String title;
-    private boolean isDone;
+    @JsonProperty("isDone")
+    private boolean isDone ;
 
     public Task() {}
 
@@ -25,6 +27,6 @@ public class Task {
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
-    public boolean isDone() { return isDone; }
-    public void setDone(boolean done) { isDone = done; }
+    public boolean getIsDone() { return isDone; }
+    public void setIsDone(boolean done) { isDone = done; }
 }

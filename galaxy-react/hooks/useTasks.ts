@@ -20,17 +20,18 @@ export function useTasks() {
   };
 
   const createTask = async (task: Omit<Task, 'id'>) => {
+    console.log('new task create:', task); 
     const newTask = await addTask(task);
     setTasks(prev => [...prev, newTask]);
   };
 
   const completeTask = async (id: number) => {
-    const task = tasks.find(t => t.id === id);
-    if (task) {
-      const updatedTask = await updateTask(id, { ...task, isDone: !task.isDone });
-      setTasks(prev => prev.map(t => (t.id === id ? updatedTask : t)));
-    }
-  };
+  const task = tasks.find(t => t.id === id);
+  if (task) {
+    const updatedTask = await updateTask(id, { ...task, isDone: !task.isDone });
+    setTasks(prev => prev.map(t => (t.id === id ? updatedTask : t)));
+  }
+};
 
   const removeTask = async (id: number) => {
     await deleteTask(id);

@@ -26,10 +26,14 @@ public class TaskService {
         return repository.save(task);
     }
 
-    public Task updateTask(Long id, Task task) {
-        if (!repository.existsById(id)) return null;
-        task.setId(id);
-        return repository.save(task);
+    public Task updateTask(Long id, Task newTask) {
+        return repository.findById(id)
+                .map(existing -> {
+                    existing.setTitle(newTask.getTitle());
+                    existing.setIsDone(newTask.getIsDone());
+                    return repository.save(existing);
+                })
+                .orElse(null);
     }
 
     public boolean deleteTask(Long id) {
@@ -43,7 +47,7 @@ public class TaskService {
         if (optionalTask.isEmpty()) return null;
 
         Task task = optionalTask.get();
-        task.setDone(!task.isDone());
+        task.setIsDone(!task.getIsDone());
         return repository.save(task);
     }
 }
