@@ -19,7 +19,8 @@
 
 show app front
 
-![image](https://github.com/user-attachments/assets/2e63f37f-b5f0-4f3a-b3f2-ff366795ee2f)
+![image](https://github.com/user-attachments/assets/80283149-0787-4902-b7ae-14664f4917ab)
+
 
 
 
