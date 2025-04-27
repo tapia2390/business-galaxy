@@ -3,7 +3,7 @@ import { Task } from '../types/task';
 
 
 
-const API_URL = 'http://localhost:8080/tasks';
+const API_URL = 'http://192.168.0.7:8080/tasks';
 
 export const getTasks = async () => {
   const response = await axios.get<Task[]>(API_URL);

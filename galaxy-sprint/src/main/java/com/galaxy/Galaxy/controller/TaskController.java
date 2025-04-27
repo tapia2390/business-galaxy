@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@CrossOrigin(origins = "http://192.168.0.7:8081")
 @RestController
 @RequestMapping("/tasks")
 @Tag(name = "Tareas", description = "API para gestionar tareas")
+
 public class TaskController {
 
     private final TaskService service;

@@ -5,6 +5,9 @@ import {
   ActivityIndicator,
   StyleSheet,
   Text,
+  SafeAreaView,
+  StatusBar,
+  Platform,
 } from "react-native";
 import { useTasks } from "../../hooks/useTasks";
 import TaskItem from "../../components/TaskItem";
@@ -22,7 +25,7 @@ export default function HomeScreen() {
     removeTask,
     updateTask,
   } = useTasks();
-  const [editingTask, setEditingTask] = useState<Task | null>(null); // State for editing task
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   const handleSaveTask = (
     title: string,
@@ -30,45 +33,47 @@ export default function HomeScreen() {
     taskId?: number
   ) => {
     if (taskId) {
-      // Update existing task
       updateTask(taskId, { title, description });
     } else {
-      // Create new task
       createTask({ title, description, isDone: false });
     }
-    setEditingTask(null); // Reset editing task after save
+    setEditingTask(null);
   };
 
   if (loading) return <ActivityIndicator size="large" color={Colors.primary} />;
-
   if (error) return <Text>Error: {error}</Text>;
 
   return (
-    <View style={styles.container}>
-      <TaskForm
-        task={editingTask} // Pass the task to be edited
-        onSave={handleSaveTask}
-      />
-      <FlatList
-        data={tasks}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <TaskItem
-            task={item}
-            onComplete={completeTask}
-            onDelete={removeTask}
-            onEdit={() => setEditingTask(item)} // Set task to be edited
-          />
-        )}
-      />
-    </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <TaskForm task={editingTask} onSave={handleSaveTask} />
+        <FlatList
+          data={tasks}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <TaskItem
+              task={item}
+              onComplete={completeTask}
+              onDelete={removeTask}
+              onEdit={() => setEditingTask(item)}
+            />
+          )}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: Colors.background,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0, // <- ESTA LÍNEA ES LA CLAVE para Android
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingTop: 16, // Un pequeño espacio extra dentro
   },
 });
