@@ -17,7 +17,13 @@
   
   ![image](https://github.com/user-attachments/assets/30e943c9-00c1-4654-9faa-cb7fc4d62e51)
 
-show app front
+show app front without  bd
+
+![image](https://github.com/user-attachments/assets/537f7f57-94f4-4cff-889d-9b97634eec47)
+
+
+
+show app front with bd
 
 ![image](https://github.com/user-attachments/assets/80283149-0787-4902-b7ae-14664f4917ab)
 
